@@ -16,6 +16,7 @@ import java.awt.*;
  */
 public class Recipt_Dot_Matrix extends JFrame {
     static MainView mainView;
+    static Menu menuView;
 
     /**
      * @param args the command line arguments
@@ -39,8 +40,8 @@ public class Recipt_Dot_Matrix extends JFrame {
     }
     public static void main(String[] args) {
         System.out.println("run");
-        mainView = new MainView();
-        mainView.setVisible(true);
+        menuView = new Menu();
+        menuView.setVisible(true);
     }
     
 }
