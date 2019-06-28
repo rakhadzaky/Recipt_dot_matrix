@@ -26,6 +26,7 @@ public class MainView extends javax.swing.JFrame {
     dataBarang item;
     String nama = "";
     String alamat = "";
+    String nama_toko = "";
     int jumlah_total = 0;
     nota recipt;
 
@@ -36,7 +37,7 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
         this.GetData();
         this.GetDataPelanggan();
-        this.recipt = new nota(this.nama, this.alamat, "6/20/2019",this.jumlah_total);
+        this.recipt = new nota(this.nama, this.alamat, "6/20/2019",this.jumlah_total,this.nama_toko);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
             },
@@ -54,8 +55,9 @@ public class MainView extends javax.swing.JFrame {
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet sql = stm.executeQuery("select * from tbpelanggan");
             while(sql.next()){
-                pelanggan = new penerima(sql.getString("id_pelanggan"), sql.getString("nama"), sql.getString("alamat"));
-                cbPenerima.addItem(pelanggan);
+                pelanggan = new penerima(sql.getString("id_pelanggan"), sql.getString("nama"), sql.getString("nama_toko"), sql.getString("alamat"));
+                pelanggans.add(pelanggan);
+                cbPenerima.addItem(pelanggan.getNama());
             }
         } catch (Exception e) {
         }
@@ -71,7 +73,7 @@ public class MainView extends javax.swing.JFrame {
                 item.setNama_barang(sql.getString("nama_barang"));
                 item.setHarga(sql.getInt("harga"));
                 items.add(item);
-                cbKdBarang.addItem(item);
+                cbKdBarang.addItem(item.getNama_barang());
             }
         }
         catch (SQLException | HeadlessException e) {
@@ -110,6 +112,8 @@ public class MainView extends javax.swing.JFrame {
         lbTotal = new javax.swing.JLabel();
         btnPrint = new javax.swing.JButton();
         spinQty = new javax.swing.JSpinner();
+        lbNamaToko = new javax.swing.JLabel();
+        lbAlamat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 300));
@@ -195,12 +199,18 @@ public class MainView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbKdBarang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbPenerima, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spinQty, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(116, 116, 116)
-                        .addComponent(btnSubmit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spinQty, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(116, 116, 116)
+                                .addComponent(btnSubmit))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbNamaToko)
+                                .addGap(101, 101, 101)
+                                .addComponent(lbAlamat)))
                         .addGap(36, 36, 36))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +223,9 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbPenerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbPenerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbNamaToko)
+                    .addComponent(lbAlamat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -237,7 +249,11 @@ public class MainView extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        dataBarang item = (dataBarang) cbKdBarang.getSelectedItem();
+        int i = 0;
+        while(!(cbKdBarang.getSelectedItem().equals(items.get(i).getNama_barang()))){
+            i++;
+        };
+        dataBarang item = items.get(i);
         String kode_barang = item.getKode_barang();
         String nama_barang = item.getNama_barang();
         int jumlah = (int) spinQty.getValue();
@@ -256,20 +272,25 @@ public class MainView extends javax.swing.JFrame {
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
         Recipt_Dot_Matrix print = new Recipt_Dot_Matrix();
-        print.setVisible(false);
         print.setVisible(true);
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void cbKdBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbKdBarangActionPerformed
         // TODO add your handling code here:
-        dataBarang data = (dataBarang) cbKdBarang.getSelectedItem();
     }//GEN-LAST:event_cbKdBarangActionPerformed
 
     private void cbPenerimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPenerimaActionPerformed
         // TODO add your handling code here:
-        penerima a = (penerima) cbPenerima.getSelectedItem();
+        int i = 0;
+        while(!(cbPenerima.getSelectedItem().equals(pelanggans.get(i).getNama()))){
+            i++;
+        };
+        penerima a = pelanggans.get(i);
         this.nama = a.getNama();
         this.alamat = a.getAlamat();
+        this.nama_toko = a.getNama_toko();
+        lbNamaToko.setText(a.getNama_toko());
+        lbAlamat.setText(a.getAlamat());
     }//GEN-LAST:event_cbPenerimaActionPerformed
 
     /**
@@ -319,6 +340,8 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbAlamat;
+    private javax.swing.JLabel lbNamaToko;
     private javax.swing.JLabel lbTotal;
     private javax.swing.JSpinner spinQty;
     // End of variables declaration//GEN-END:variables

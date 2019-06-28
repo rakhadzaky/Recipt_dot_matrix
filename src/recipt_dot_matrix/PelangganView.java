@@ -29,7 +29,7 @@ public class PelangganView extends javax.swing.JFrame {
             new Object [][] {
             },
             new String [] {
-                "Kode Pelanggan", "Nama Pelanggan", "Alamat"
+                "Kode Pelanggan", "Nama Pelanggan", "Nama Toko", "Alamat"
             }
         ));
         try {
@@ -37,7 +37,7 @@ public class PelangganView extends javax.swing.JFrame {
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet sql = stm.executeQuery("select * from tbpelanggan");
             while(sql.next()){
-                Object[] row = {sql.getString("id_pelanggan"), sql.getString("nama"), sql.getString("alamat")};
+                Object[] row = {sql.getString("id_pelanggan"), sql.getString("nama"), sql.getString("nama_toko"), sql.getString("alamat")};
                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
                 model.addRow(row);
             }
@@ -66,6 +66,8 @@ public class PelangganView extends javax.swing.JFrame {
         taAlamat = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        tfNamaToko = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +111,8 @@ public class PelangganView extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Nama Toko");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,17 +122,19 @@ public class PelangganView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3)
-                                .addComponent(jLabel4))
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel5))
                             .addGap(30, 30, 30)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jScrollPane2)
                                 .addComponent(tfNamaPelanggan)
-                                .addComponent(tfKodePelanggan)))
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(tfKodePelanggan)
+                                .addComponent(tfNamaToko))))
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,10 +144,7 @@ public class PelangganView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(14, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -152,15 +155,20 @@ public class PelangganView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(tfNamaPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfNamaToko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addGap(24, 24, 24))))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,13 +178,14 @@ public class PelangganView extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             Connection conn =(Connection)Db_Connection.koneksiDB();
-            String sql = "INSERT INTO tbpelanggan values('"+tfKodePelanggan.getText()+"','"+tfNamaPelanggan.getText()+"','"+taAlamat.getText()+"')";
+            String sql = "INSERT INTO tbpelanggan values('"+tfKodePelanggan.getText()+"','"+tfNamaPelanggan.getText()+"','"+taAlamat.getText()+"','"+tfNamaToko.getText()+"')";
             java.sql.PreparedStatement insert = conn.prepareStatement(sql);
             insert.execute();
             loadTablePelanggan();
             tfKodePelanggan.setText("");
             tfNamaPelanggan.setText("");
             taAlamat.setText("");
+            tfNamaToko.setText("");
             JOptionPane.showMessageDialog(this, "Input Success");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -230,11 +239,13 @@ public class PelangganView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea taAlamat;
     private javax.swing.JTextField tfKodePelanggan;
     private javax.swing.JTextField tfNamaPelanggan;
+    private javax.swing.JTextField tfNamaToko;
     // End of variables declaration//GEN-END:variables
 }

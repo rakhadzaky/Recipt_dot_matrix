@@ -7,11 +7,11 @@
      "template": {
          "header": [ "PT. XYZ" ],
          "detail": [
+             "                                                                         ${nama_toko}",
              "                                                                         ${alamat}",
-             "                                                                                         ${tanggal}",
              {
                 "table": "listbarang",
-                "border": true,
+                "border": false,
                 "columns": [
                     { "caption": "Nama Barang", "source": "nama_barang", "width": 30, "wrap": true },
                     { "caption": "Qty", "source": "qty::right", "width": 10 },
@@ -19,12 +19,14 @@
                     { "caption": "Jumlah", "source": "total::right", "width": 30 }
                 ]
              },
-            "Jumlah :                                                                                   ${total}",
-            "      Penerima,                                                                   Pengirim         ",
-            "                                                                    ",
-            "                                                                    ",
-            "                                                                    ",
-            "      ${penerima:20}                                                        (Rusbandoyo)       "
+            "                                                                                          ${total}",
+            "",
+            "                                                                                         ${tanggal}",
+            "",
+            "",
+            "",
+            "",
+            "      ${penerima:20}"
          ]
      }
  }

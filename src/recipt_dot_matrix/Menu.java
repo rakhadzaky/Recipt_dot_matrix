@@ -12,12 +12,17 @@ package recipt_dot_matrix;
 public class Menu extends javax.swing.JFrame {
     static BarangView barangView;
     static PelangganView pelangganView;
+    static MainView main;
 
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+    }
+    
+    public nota getRecipt(){
+        return this.main.getRecipt();
     }
 
     /**
@@ -53,6 +58,11 @@ public class Menu extends javax.swing.JFrame {
         });
 
         jButton4.setText("Input Nota");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,6 +103,12 @@ public class Menu extends javax.swing.JFrame {
         pelangganView = new PelangganView();
         pelangganView.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        main = new MainView();
+        main.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

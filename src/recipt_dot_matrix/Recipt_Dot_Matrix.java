@@ -15,7 +15,7 @@ import java.awt.*;
  * @author Immelman
  */
 public class Recipt_Dot_Matrix extends JFrame {
-    static MainView mainView;
+//    static MainView mainView;
     static Menu menuView;
 
     /**
@@ -30,7 +30,7 @@ public class Recipt_Dot_Matrix extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        PrintPreviewPane preview = new PrintPreviewPane(template, null, this.mainView.getRecipt());
+        PrintPreviewPane preview = new PrintPreviewPane(template, null, this.menuView.getRecipt());
         setLayout(new BorderLayout());
         add(preview, BorderLayout.CENTER);
  

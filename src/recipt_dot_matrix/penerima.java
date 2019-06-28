@@ -12,11 +12,13 @@ package recipt_dot_matrix;
 public class penerima {
     private String id_pelanggan;
     private String nama;
+    private String nama_toko;
     private String alamat;
 
-    public penerima(String id_pelanggan, String nama, String alamat) {
+    public penerima(String id_pelanggan, String nama, String nama_toko, String alamat) {
         this.id_pelanggan = id_pelanggan;
         this.nama = nama;
+        this.nama_toko = nama_toko;
         this.alamat = alamat;
     }
 
@@ -31,6 +33,12 @@ public class penerima {
     public String getAlamat() {
         return alamat;
     }
+
+    public String getNama_toko() {
+        return nama_toko;
+    }
+    
+    
     
     
 }

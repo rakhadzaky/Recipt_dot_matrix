@@ -14,15 +14,17 @@ import java.util.List;
 public class nota {
     private String penerima;
     private String alamat;
+    private String nama_toko;
     private String tanggal;
     private int total;
     private List<barang> listbarang = new ArrayList<barang>();
 
-    public nota(String penerima, String alamat, String tanggal, int total) {
+    public nota(String penerima, String alamat, String tanggal, int total, String nama_toko) {
         this.penerima = penerima;
         this.alamat = alamat;
         this.tanggal = tanggal;
         this.total = total;
+        this.nama_toko = nama_toko;
     }
     
     public void addTotal(int num){
@@ -51,5 +53,9 @@ public class nota {
     
     public void tambahbarang(barang item){
         this.listbarang.add(item);
+    }
+
+    public String getNama_toko() {
+        return nama_toko;
     }
 }
